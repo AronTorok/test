@@ -1,97 +1,79 @@
-:root {
-  --trsn: all 0.5s ease 0s;
-  --black: #000;
-}
-
-.content {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 9999;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.film,
-.effect,
-.grain,
-.content:after,
-.film:after,
-.effect:after,
-.grain:after {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.content:after {
-  content: "";
-  width: 100%;
-  height: 100%;
-  box-shadow:
-    0 0 20vmin 0vmin var(--black) inset,
-    0 0 3vmin 0.5vmin var(--black) inset,
-    0 0 1vmin 1vmin var(--black);
-}
-
-.film,
 .effect {
+  position: fixed;
   width: 100%;
-  height: 100%;
-  filter: blur(0.45px) drop-shadow(0px 0px 0px #fff1);
+  height: 100vh;
+  overflow: hidden;
+  filter: sepia(0.5);
+  box-shadow: 0 0 150px black inset;
 }
 
-.film:after,
-.effect:after {
-  content: "";
-  width: 120%;
+.overlay {
   height: 100%;
-  opacity: 0.5;
-  animation: film-scratch 0.45s steps(1) infinite;
+  filter: blur(0.5px) drop-shadow(0 0 0 #c9c7c7);
+}
+
+.overlay:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
   background: repeating-linear-gradient(
     90deg,
     #0002 0 2px,
-    transparent 4px 37vmin
+    transparent 4px 35vmin
   );
+  animation: vlines 0.45s steps(1) infinite;
 }
 
-.effect:after {
-  left: 30%;
-  animation: effect-scratch 2s infinite;
+@keyframes vlines {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.5;
+  }
+  10% {
+    transform: translateX(-1%);
+  }
+  20% {
+    transform: translateX(1%);
+  }
+  30% {
+    transform: translateX(-2%);
+    opacity: 0.75;
+  }
+  40% {
+    transform: translateX(3%);
+  }
+  50% {
+    transform: translateX(-3%);
+    opacity: 0.5;
+  }
+  60% {
+    transform: translateX(8%);
+  }
+  70% {
+    transform: translateX(-3%);
+  }
+  80% {
+    transform: translateX(10%);
+    opacity: 0.25;
+  }
+  90% {
+    transform: translateX(-2%);
+  }
 }
 
-.grain {
+.overlay:after {
+  content: "";
+  position: absolute;
   width: 100%;
   height: 100%;
+  opacity: 0.2;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  animation: grains 0.5s steps(1) infinite;
 }
 
-.grain:after {
-  content: "";
-  width: 110%;
-  height: 110%;
-  top: -5%;
-  left: -5%;
-  opacity: 0.25;
-  background-image:
-    repeating-conic-gradient(
-      var(--black) 0%,
-      transparent 0.00003%,
-      transparent 0.0005%,
-      transparent 0.00095%
-    ),
-    repeating-conic-gradient(
-      var(--black) 0%,
-      transparent 0.00005%,
-      transparent 0.00015%,
-      transparent 0.0009%
-    );
-  animation: grain 0.5s steps(1) infinite;
-  filter: drop-shadow(0px 0px 1px black);
-}
-
-@keyframes grain {
+@keyframes grains {
   0%,
   100% {
     transform: translate(0, 0);
@@ -122,82 +104,5 @@
   }
   90% {
     transform: translate(-3%, -3%);
-  }
-}
-
-@keyframes film-scratch {
-  0%,
-  100% {
-    transform: translateX(0);
-    opacity: 0.5;
-  }
-  10% {
-    transform: translateX(-1%);
-  }
-  20% {
-    transform: translateX(1%);
-  }
-  30% {
-    transform: translateX(-2%);
-    opacity: 0.75;
-  }
-  40% {
-    transform: translateX(3%);
-  }
-  50% {
-    transform: translateX(-3%);
-    opacity: 0.5;
-  }
-  60% {
-    transform: translateX(8%);
-  }
-  70% {
-    transform: translateX(-3%);
-  }
-  80% {
-    transform: translateX(10%);
-    opacity: 0.25;
-  }
-  90% {
-    transform: translateX(-2%);
-  }
-}
-
-@keyframes effect-scratch {
-  0% {
-    transform: translateX(0);
-    opacity: 0.75;
-  }
-  10% {
-    transform: translateX(-1%);
-  }
-  20% {
-    transform: translateX(1%);
-  }
-  30% {
-    transform: translateX(-2%);
-  }
-  40% {
-    transform: translateX(3%);
-  }
-  50% {
-    transform: translateX(-3%);
-    opacity: 0.5;
-  }
-  60% {
-    transform: translateX(8%);
-  }
-  70% {
-    transform: translateX(-3%);
-  }
-  80% {
-    transform: translateX(10%);
-    opacity: 0.25;
-  }
-  90% {
-    transform: translateX(20%);
-  }
-  100% {
-    transform: translateX(30%);
   }
 }
